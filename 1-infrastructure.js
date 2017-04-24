@@ -1,6 +1,8 @@
 /**
  * Created by yj on 2016/12/30.
  */
+// 我们在这里写的框架并不是分析jQuery的源码，而是借鉴jQuery的做法，最重要的是自己思考如何实现
+// 和jQuery相比比较简单，同时和jQuery非常相似
 // 1、为避免污染全局变量，用匿名函数自执行的方式包裹，从而只定义了两个全局变量：mQuery $
 // 2、平时使用jQuery的时候直接用$(xxx)，$实际上就是一个函数，即每次$(xxx)一下实际上就是调用了一下$函数，也就是调用了一下mQuery函数
 // 3、思考：如果我们自己设计一个框架实现的思路是什么？
@@ -40,7 +42,7 @@
 // 在外面直接这样调用实际上就相当于mQuery()
 // 但是这样调用是不能调用attr css等方法的
 // $()只是普通的函数调用，普通的函数调用返回值如果没有指定的话返回的是undefined
-$();
+
 
 // 只有通过new调用才会返回对象，如果通过new调用的函数中手动通过return返回了别的值，自己下去看一下结果是什么
 var $obj = new $();
@@ -85,7 +87,7 @@ $().attr().css()
 // 怎么让new mQuery.prototype.init()对象上也有这些方法呢
 // 思考：new mQuery()对象上的attr css append这些方法是定义在mQuery的原型对象，即mQuery.prototype上的
 // 也就是说我们通过new mQuery().attr()这样调用的时候是访问的mQuery原型对象上的attr方法
-// mQuery.prototype.init也是一个函数，这个函数也有原型对象:mQuery.prototype.init.prototype
+// mQuery.prototype.init也是一个函数，这个函数的prototype属性也指向它的原型对象:mQuery.prototype.init.prototype
 // 这个函数的原型对象(mQuery.prototype.init.prototype)上是没有attr css append这些方法的
 // 因此，我们可以把mQuery.prototype的引用赋值给mQuery.prototype.init.prototype即可
 // 这样new mQuery.prototype.init()实例化对象访问attr方法时去原型mQuery.prototype.init.prototype上找
